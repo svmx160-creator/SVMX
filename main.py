@@ -2,18 +2,18 @@
  from openai import OpenAI
 
  st.set_page_config(
-        page_tittle="……."
-        page_icon="……"
+        page_tittle="GIVENOV."
+        page_icon="00"
  )
 
- st.title("………")
+ st.title("GIVENOV")
  st.caption("Environmental & Geographical Research Assistant")
  api_key = st.secrets["OPEN_AI_KEY"]
 
  client =  OpenAI(api_key=api_key)
 
  SYSTEM_PROMPT = " " "
- You are …….AI, an intelligent research assistant.
+ You are GIVENOV AI, an intelligent research assistant.
  
  Your specialisations are:
  1. Environmental Science
@@ -34,7 +34,7 @@
        with st.chat_message(message["role"]) :
              st.markdown(message["content"])
 
- if prompt  := st.chat_input("Ask ……… a question… ") :
+ if prompt  := st.chat_input("Ask GIVENOV a question… ") :
 
        st.session_state.messages.append(
              {"role" : "user", "content" :
