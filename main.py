@@ -116,7 +116,7 @@ def connect_ai(api_key):
 
 
 MODELS = [
-    "gemini-2.5-flash",
+    "gemini-3.8-flash",
 ]
 
 
