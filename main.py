@@ -9,7 +9,7 @@ st.set_page_config(
 st.title("GIVENOV")
 st.caption("Environmental & Geographical Research Assistant")
 
-api_key = st.secrets["OPEN_AI_KEY"]
+api_key = st.secrets["OPENAI_API_KEY"]
 client = OpenAI(api_key=api_key)
 
 SYSTEM_PROMPT = """
