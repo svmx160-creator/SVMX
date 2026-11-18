@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 
 st.set_page_config(
     page_title="GIVENOV.",
@@ -41,15 +41,24 @@ if prompt := st.chat_input("Ask GIVENOV a question…"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        response = client.chat.completions.create(
-            model="gpt-4.1-mini",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                *st.session_state.messages,
-            ],
-        )
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4.1-mini",
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    *st.session_state.messages,
+                ],
+            )
 
-        answer = response.choices[0].message.content
-        st.markdown(answer)
-
-    st.session_state.messages.append({"role": "assistant", "content": answer})
+            answer = response.choices[0].message.content
+            if not answer:
+                st.error("The API returned an empty response. Please try again.")
+            else:
+                st.markdown(answer)
+                st.session_state.messages.append(
+                    {"role": "assistant", "content": answer}
+                )
+        except OpenAIError as exc:
+            status_code = getattr(exc, "status_code", None)
+            status_text = f" (HTTP {status_code})" if status_code else ""
+            st.error(f"OpenAI request failed{status_text}: {exc}")
